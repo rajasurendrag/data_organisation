@@ -160,18 +160,43 @@ const petActivities = (people) =>
   );
 
 // ------------------ PET OF PEOPLE FROM BLR AND CHE ------------------\\
+
 const animalsOfBLRAndCHE = (people) =>
   people
     .filter((person) => person.city === "Banglore" || person.city === "Chennai")
     .flatMap((person) => person.pets.flatMap((pet) => ({ name: pet.name })));
 
 // ---------------- VACINATED PETS OF CAR LESS  -----------------------\\
+
 const vacinatedPetsOfNoCarPeople = (people) =>
   people
     .filter((person) => !person.vehicles.includes("car"))
     .flatMap((person) => person.pets)
     .filter((pet) => pet.vaccinated).length;
+
 // -------------------- PEOPLE WITH MORETHAN TWO HOBBIES --------------\\
+
+const peopleWithMoreThanTwoHobbies = (people) =>
+  people.filter((person) => person.hobbies.length > 2).length;
+
+// ----------------------------- YOUNGEST PET ---------------------------\\
+
+const youngestPet = (people) =>
+  people
+    .flatMap((person) => person.pets)
+    .reduce((youngPet, pet) =>
+      pet.age < youngPet.age ? { name: pet.name, age: pet.age } : youngPet
+    ).name;
+
+// ------------------------ CITY NAME START WITH B -------------------\\
+
+const noOfPeopleWithCityNameB = (people) =>
+  people.filter((person) => person.city.at(0) === "B").length;
+
+// ---------------------------- DOES'NT OWN PETS -----------------------\\
+
+const peopleWhoDoesntOwnPet = (people) =>
+  people.filter((person) => person.pets.length === 0);
 
 // ----------------------------- TEST CASES ---------------------------\\
 const testing = function (Question, func) {
@@ -217,6 +242,16 @@ const testCases = () => {
     "13. How many vaccinated pets belong to people who do not own a car?",
     vacinatedPetsOfNoCarPeople
   );
+  testing(
+    "15. How many individuals have more than two hobbies?",
+    peopleWithMoreThanTwoHobbies
+  );
+  testing("17. Which pet is the youngest, and what is its name?", youngestPet);
+  testing(
+    "19. How many individuals live in cities starting with the letter 'B'?",
+    noOfPeopleWithCityNameB
+  );
+  testing("20. Which individuals do not own any pets?", peopleWhoDoesntOwnPet);
 };
 
 testCases();
