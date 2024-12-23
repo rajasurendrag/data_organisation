@@ -155,11 +155,22 @@ const petsOfComputerSciencePeople = function (people) {
 const moreThanOnePet = (people) =>
   people.filter((person) => person.pets.length > 1).length;
 
-// ------------------------- PET ACTIVITIES ----------------------\\
+// ------------------------- PET ACTIVITIES -------------------------\\
 const petLikes = (person) =>
   person.pets.flatMap((pet) => [{ name: pet.name, likes: pet.likes }]);
 
 const petActivities = (people) => people.flatMap(petLikes);
+
+// ------------------ PET OF PEOPLE FROM BLR AND CHE -----------------\\
+const animalsOfBLRAndCHE = function (people) {
+  const filteredppl = people.filter(
+    (person) => person.city === "Banglore" || person.city === "Chennai"
+  );
+
+  return filteredppl.flatMap((person) =>
+    person.pets.flatMap((pet) => [{ name: pet.name }])
+  );
+};
 
 // ----------------------------- TEST CASES --------------------------\\
 const testing = function (Question, func) {
@@ -196,6 +207,10 @@ const testCases = () => {
   testing(
     "11. Which pets are associated with specific favorite activities?",
     petActivities
+  );
+  testing(
+    "12. What are the names of all animals that belong to people who live in Bangalore or Chennai?",
+    animalsOfBLRAndCHE
   );
 };
 
