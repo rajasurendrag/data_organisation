@@ -2,10 +2,10 @@ const people = [
   {
     name: "Rahul",
     city: "Pune",
-    hobbies: ["playing chess", "Gardening"],
     age: 30,
-    education: "computer science",
     job: "software engineer",
+    hobbies: ["playing chess", "Gardening"],
+    education: "computer science",
     currentlyEmployed: true,
     vehicle: ["car"],
     pets: [
@@ -15,17 +15,17 @@ const people = [
         age: "4 years",
         vaccinated: true,
         isFullyVacinated: true,
-        likes: "playing fetch in park",
+        likes: ["playing fetch in park"],
       },
     ],
   },
   {
     name: "Ananya",
     city: "Banglore",
-    hobbies: ["cooking", "trying italian recipes"],
     age: 30,
-    education: "computer science",
     job: "unemployed",
+    hobbies: ["cooking", "trying italian recipes"],
+    education: "computer science",
     currentlyEmployed: true,
     vehicle: ["public transport"],
     pets: [
@@ -35,7 +35,7 @@ const people = [
         age: "unknown",
         vaccinated: true,
         isFullyVacinated: false,
-        likes: "mimics Ananya's voice",
+        likes: ["mimics Ananya's voice"],
       },
     ],
   },
@@ -43,9 +43,9 @@ const people = [
     name: "Ramesh",
     city: "Jaipur",
     age: 45,
-    currentlyEmployed: true,
     job: "Business Owner",
     education: "graduated in BA",
+    currentlyEmployed: true,
     vehicle: [],
     hobbies: [
       "Gardening",
@@ -59,7 +59,7 @@ const people = [
         age: 3,
         vaccinated: true,
         isFullyVacinated: true,
-        likes: "love lounging in the sun",
+        likes: ["love lounging in the sun"],
       },
       {
         type: "cat",
@@ -67,7 +67,7 @@ const people = [
         age: 3,
         vaccinated: true,
         isFullyVacinated: true,
-        likes: "love lounging in the sun",
+        likes: ["love lounging in the sun"],
       },
     ],
   },
@@ -75,8 +75,8 @@ const people = [
     name: "Kavya",
     city: "Chennai",
     age: 28,
-    currentlyEmployed: false,
     job: "unemployed",
+    currentlyEmployed: false,
     education: "diploma in CS",
     hobbies: ["reading modern fantasy novels", "Binge-Watching sci-fi shows"],
     vehicle: [],
@@ -88,21 +88,24 @@ const people = [
         age: 2,
         vaccinated: true,
         isFullyVacinated: false,
-        likes: "enjoys hopping around her backyard and nibbling on carrots",
+        likes: ["enjoys hopping around her backyard and nibbling on carrots"],
       },
     ],
   },
 ];
 
 // ----------------------- EMPLOYED INDIVIDUALS ------------------------\\
+
 const employedPeople = (people) =>
   people.filter((person) => person.job !== "unemployed").length;
 
 // ----------------------- PEOPLE OWNED CAR ----------------------------\\
+
 const peopleWhoOwnedCar = (people) =>
   people.filter((person) => person.vehicle.includes("car")).length;
 
 // --------------------------- FULLY VACINATED -------------------------\\
+
 const isPetFullyVaccinated = function (count, person) {
   let counter = person.pets.filter((pet) => pet.isFullyVacinated);
   return count + counter.length;
@@ -111,6 +114,7 @@ const isPetFullyVaccinated = function (count, person) {
 const totalVaccinatedPets = (people) => people.reduce(isPetFullyVaccinated, 0);
 
 // ------------------------ PET NAME AND TYPE --------------------------\\
+
 const petNameAndType = function (person) {
   return person.pets.flatMap((pet) => [{ name: pet.name, type: pet.type }]);
 };
@@ -118,9 +122,11 @@ const petNameAndType = function (person) {
 const allPets = (people) => people.flatMap(petNameAndType);
 
 // ------------------------ CITIES OF PEOPLE --------------------------\\
+
 const cities = (person) => person.map((people) => people.city);
 
 // ------------------------ AVERAGE OF AGES ---------------------------\\
+
 const averageOfArray = (array) =>
   array.reduce((accumuator, number) => accumuator + number, 0) / array.length;
 
@@ -131,6 +137,7 @@ const averageOfAges = function (people) {
 };
 
 // ----------------------- HOBBIES SHARED ---------------------------- \\
+
 const hobbies = (people) => {
   const hobbiesOfPeople = people.flatMap((person) => person.hobbies);
 
@@ -138,10 +145,12 @@ const hobbies = (people) => {
 };
 
 // ----------------------- PETS OF UNEMPLOYED --------------------------\\
+
 const petsOfUnEmployed = (people) =>
   people.filter((person) => person.job === "unemployed").length;
 
 // ----------------------- PETS OF UNEMPLOYED --------------------------\\
+
 const peopleOfCompuerScience = (people) =>
   people.filter((person) => person.education === "computer science");
 
@@ -152,16 +161,19 @@ const petsOfComputerSciencePeople = function (people) {
 };
 
 // ------------------------- MORE THAN ONE PET ----------------------\\
+
 const moreThanOnePet = (people) =>
   people.filter((person) => person.pets.length > 1).length;
 
 // ------------------------- PET ACTIVITIES -------------------------\\
+
 const petLikes = (person) =>
   person.pets.flatMap((pet) => [{ name: pet.name, likes: pet.likes }]);
 
 const petActivities = (people) => people.flatMap(petLikes);
 
 // ------------------ PET OF PEOPLE FROM BLR AND CHE -----------------\\
+
 const animalsOfBLRAndCHE = function (people) {
   const filteredppl = people.filter(
     (person) => person.city === "Banglore" || person.city === "Chennai"
@@ -171,6 +183,8 @@ const animalsOfBLRAndCHE = function (people) {
     person.pets.flatMap((pet) => [{ name: pet.name }])
   );
 };
+
+// ---------------- VACINATED PETS OF CAR LESS  ----------------------\\
 
 // ----------------------------- TEST CASES --------------------------\\
 const testing = function (Question, func) {
