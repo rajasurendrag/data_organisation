@@ -151,6 +151,16 @@ const petsOfComputerSciencePeople = function (people) {
   return CSPeople.reduce((count, person) => count + person.pets.length, 0);
 };
 
+// ------------------------- MORE THAN ONE PET ----------------------\\
+const moreThanOnePet = (people) =>
+  people.filter((person) => person.pets.length > 1).length;
+
+// ------------------------- PET ACTIVITIES ----------------------\\
+const petLikes = (person) =>
+  person.pets.flatMap((pet) => [{ name: pet.name, likes: pet.likes }]);
+
+const petActivities = (people) => people.flatMap(petLikes);
+
 // ----------------------------- TEST CASES --------------------------\\
 const testing = function (Question, func) {
   console.log("Qns ", Question);
@@ -181,6 +191,11 @@ const testCases = () => {
   testing(
     "9. How many individuals have studied computer science, and how many of them have pets?",
     petsOfComputerSciencePeople
+  );
+  testing("10. How many individuals own more than one pet?", moreThanOnePet);
+  testing(
+    "11. Which pets are associated with specific favorite activities?",
+    petActivities
   );
 };
 
