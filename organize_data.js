@@ -4,7 +4,7 @@ const people = [
     city: "Pune",
     age: 30,
     occupation: "software engineer",
-    hobbies: ["playing chess", "Gardening"],
+    hobbies: [{ playing: "chess", Gardening: "watering plants" }],
     education: "computer science",
     vehicles: ["car"],
     pets: [
@@ -23,7 +23,7 @@ const people = [
     city: "Banglore",
     age: 30,
     occupation: null,
-    hobbies: ["cooking", "trying italian recipes"],
+    hobbies: [{ cooking: "trying italian recipes" }],
     education: "computer science",
     vehicles: [],
     pets: [
@@ -45,9 +45,7 @@ const people = [
     education: "BA",
     vehicles: [],
     hobbies: [
-      "Gardening",
-      "tending rose garden",
-      "reading historical friction",
+      { Gardening: "tending rose garden", Reading: "historical friction" },
     ],
     pets: [
       {
@@ -73,8 +71,13 @@ const people = [
     city: "Chennai",
     age: 28,
     occupation: null,
-    education: "diploma in CS",
-    hobbies: ["reading modern fantasy novels", "Binge-Watching sci-fi shows"],
+    education: "CSE",
+    hobbies: [
+      {
+        Reading: "modern fantasy novels",
+        watchingMovies: "Binge-Watching sci-fi shows",
+      },
+    ],
     vehicles: [],
     skills: ["Dancing"],
     pets: [
@@ -96,27 +99,28 @@ const people = [
 // ----------------------- EMPLOYED INDIVIDUALS -----------------------\\
 
 const employedPeople = (people) =>
-  people.filter((person) => person.occupation !== null).length;
+  people.filter(({ occupation }) => occupation !== null).length;
 
 // ----------------------- PEOPLE OWNED CAR ---------------------------\\
 
 const peopleWhoOwnedCar = (people) =>
-  people.filter((person) => person.vehicles.includes("car")).length;
+  people.filter(({ vehicles }) => vehicles.includes("car")).length;
 
 // --------------------------- FULLY VACINATED ------------------------\\
 const totalVaccinatedPets = (people) =>
-  people.flatMap((person) => person.pets).filter((pet) => pet.isFullyVacinated)
-    .length;
+  people
+    .flatMap(({ pets }) => pets)
+    .filter(({ isFullyVacinated }) => isFullyVacinated).length;
 
 // ------------------------ PET NAME AND TYPE -------------------------\\
 const allPets = (people) =>
-  people.flatMap((person) =>
-    person.pets.map((pet) => ({ name: pet.name, type: pet.type }))
+  people.flatMap(({ pets }) =>
+    pets.map(({ name, type }) => ({ name: name, type: type }))
   );
 
 // ------------------------ CITIES OF PEOPLE --------------------------\\
 
-const cities = (people) => people.map((person) => person.city);
+const cities = (people) => people.map(({ city }) => city);
 
 // ------------------------ AVERAGE OF AGES ---------------------------\\
 
@@ -124,26 +128,29 @@ const averageOfArray = (array) =>
   array.reduce((accumuator, number) => accumuator + number, 0) / array.length;
 
 const averageOfAges = function (people) {
-  return averageOfArray(people.map((person) => person.age));
+  return averageOfArray(people.map(({ age }) => age));
 };
 
 // ----------------------- HOBBIES SHARED ---------------------------- \\
 
 const hobbies = (people) => {
-  const hobbiesOfPeople = people.flatMap((person) => person.hobbies);
+  const hobbiesOfPeople = people.flatMap(({ name, hobbies }) => ({
+    name: name,
+    hobbies: hobbies,
+  }));
   return [hobbiesOfPeople.length, hobbiesOfPeople];
 };
 
 // ----------------------- PETS OF UNEMPLOYED -------------------------\\
 
 const petsOfUnEmployed = (people) =>
-  people.filter((person) => person.occupation === null).length;
+  people.filter(({ occupation }) => occupation === null).length;
 
 // ----------------------- PETS OF UNEMPLOYED -------------------------\\
 const petsOfComputerSciencePeople = (people) =>
   people
-    .filter((person) => person.education === "computer science")
-    .flatMap((person) => person.pets).length;
+    .filter(({ education }) => education === "computer science")
+    .flatMap(({ pets }) => pets).length;
 
 // ------------------------- MORE THAN ONE PET ------------------------\\
 
@@ -152,10 +159,10 @@ const moreThanOnePet = (people) =>
 
 // --------------------------- PET ACTIVITIES -------------------------\\
 const petActivities = (people) =>
-  people.flatMap((person) =>
-    person.pets.flatMap((pet) => ({
-      name: pet.name,
-      favouriteActivities: pet.favouriteActivities,
+  people.flatMap(({ pets }) =>
+    pets.flatMap(({ name, favouriteActivities }) => ({
+      name: name,
+      favouriteActivities: favouriteActivities,
     }))
   );
 
@@ -163,27 +170,27 @@ const petActivities = (people) =>
 
 const animalsOfBLRAndCHE = (people) =>
   people
-    .filter((person) => person.city === "Banglore" || person.city === "Chennai")
-    .flatMap((person) => person.pets.flatMap((pet) => ({ name: pet.name })));
+    .filter(({ city }) => city in { Banglore: true, Chennai: true })
+    .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name: name })));
 
 // ---------------- VACINATED PETS OF CAR LESS  -----------------------\\
 
 const vacinatedPetsOfNoCarPeople = (people) =>
   people
-    .filter((person) => !person.vehicles.includes("car"))
-    .flatMap((person) => person.pets)
-    .filter((pet) => pet.vaccinated).length;
+    .filter(({ vehicles }) => !vehicles.includes("car"))
+    .flatMap(({ pets }) => pets)
+    .filter(({ vaccinated }) => vaccinated).length;
 
 // -------------------- PEOPLE WITH MORETHAN TWO HOBBIES --------------\\
 
 const peopleWithMoreThanTwoHobbies = (people) =>
-  people.filter((person) => person.hobbies.length > 2).length;
+  people.filter(({ hobbies }) => hobbies.length > 2).length;
 
 // ----------------------------- YOUNGEST PET ---------------------------\\
 
 const youngestPet = (people) =>
   people
-    .flatMap((person) => person.pets)
+    .flatMap(({ pets }) => pets)
     .reduce((youngPet, pet) =>
       pet.age < youngPet.age ? { name: pet.name, age: pet.age } : youngPet
     ).name;
@@ -191,12 +198,12 @@ const youngestPet = (people) =>
 // ------------------------ CITY NAME START WITH B -------------------\\
 
 const noOfPeopleWithCityNameB = (people) =>
-  people.filter((person) => person.city.at(0) === "B").length;
+  people.filter(({ city }) => city.at(0) === "B").length;
 
 // ---------------------------- DOES'NT OWN PETS -----------------------\\
 
 const peopleWhoDoesntOwnPet = (people) =>
-  people.filter((person) => person.pets.length === 0);
+  people.filter(({ pets }) => pets.length === 0);
 
 // ----------------------------- TEST CASES ---------------------------\\
 const testing = function (Question, func) {
