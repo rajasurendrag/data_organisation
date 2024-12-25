@@ -2,6 +2,7 @@ Rahul, a software engineer from Pune, enjoys playing chess and gardening when he
 
 **Hypothetical Questions:**
 
+```
 1. How many individuals are currently employed?
 2. How many people own a car?
 3. How many pets are fully vaccinated?
@@ -22,3 +23,4 @@ Rahul, a software engineer from Pune, enjoys playing chess and gardening when he
 18. What types of books are mentioned as interests, and who reads them?
 19. How many individuals live in cities starting with the letter "B"?
 20. Which individuals do not own any pets?
+```
