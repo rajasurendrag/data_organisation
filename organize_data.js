@@ -138,7 +138,7 @@ const averageOfAges = function (people) {
 
 // ----------------------- HOBBIES SHARED ---------------------------- \\
 
-const hobbies = (people) => {
+const hobbiesOfPeople = (people) => {
   const hobbiesOfPeople = people.flatMap(({ name, hobbies }) => ({
     name,
     hobbies,
@@ -161,12 +161,12 @@ const petsOfComputerSciencePeople = (people) =>
 
 // ------------------------- MORE THAN ONE PET ------------------------\\
 
-const moreThanOnePet = (people) =>
+const peopleWithMoreThanOnePet = (people) =>
   people.filter((person) => person.pets.length > 1).length;
 
 // --------------------------- PET ACTIVITIES -------------------------\\
 
-const petActivities = (people) =>
+const petNameAndActivities = (people) =>
   allPets(people).map(({ name, favouriteActivities }) => ({
     name,
     favouriteActivities,
@@ -174,7 +174,7 @@ const petActivities = (people) =>
 
 // ------------------ PET OF PEOPLE FROM BLR AND CHE ------------------\\
 
-const animalsOfBLRAndCHE = (people) =>
+const petsOfPeopleFromBangloreAndChennai = (people) =>
   people
     .filter(({ city }) => city in { Banglore: true, Chennai: true })
     .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name })));
@@ -204,7 +204,7 @@ const youngestPet = function (people) {
 
 // ------------------------ CITY NAME START WITH B -------------------\\
 
-const noOfPeopleWithCityNameB = (people) =>
+const peopleInCityNameStartingWithB = (people) =>
   people.filter(({ city }) => city.startsWith("B")).length;
 
 // ---------------------------- DOES'NT OWN PETS -----------------------\\
@@ -229,7 +229,7 @@ const testCases = () => {
   testing("5. Which cities do the individuals live in?", cities);
   testing(
     "6. How many hobbies are shared across the group? What are they?",
-    hobbies
+    hobbiesOfPeople
   );
   testing(
     "7. How many pets belong to people who are currently unemployed?",
@@ -243,14 +243,17 @@ const testCases = () => {
     "9. How many individuals have studied computer science, and how many of them have pets?",
     petsOfComputerSciencePeople
   );
-  testing("10. How many individuals own more than one pet?", moreThanOnePet);
+  testing(
+    "10. How many individuals own more than one pet?",
+    peopleWithMoreThanOnePet
+  );
   testing(
     "11. Which pets are associated with specific favorite activities?",
-    petActivities
+    petNameAndActivities
   );
   testing(
     "12. What are the names of all animals that belong to people who live in Bangalore or Chennai?",
-    animalsOfBLRAndCHE
+    petsOfPeopleFromBangloreAndChennai
   );
   testing(
     "13. How many vaccinated pets belong to people who do not own a car?",
@@ -263,7 +266,7 @@ const testCases = () => {
   testing("17. Which pet is the youngest, and what is its name?", youngestPet);
   testing(
     "19. How many individuals live in cities starting with the letter 'B'?",
-    noOfPeopleWithCityNameB
+    peopleInCityNameStartingWithB
   );
   testing("20. Which individuals do not own any pets?", peopleWhoDoesntOwnPet);
 };
