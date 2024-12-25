@@ -210,7 +210,6 @@ const commonPet = (people) => {
   return Object.entries(totalOccurances).reduce(maxOccurances)[0];
 };
 
-console.log(commonPet(people));
 // 15. How many individuals have more than two hobbies?
 
 const peopleWithMoreThanTwoHobbies = (people) =>
@@ -295,4 +294,4 @@ const testCases = () => {
   testing("20. Which individuals do not own any pets?", peopleWhoDoesntOwnPet);
 };
 
-// testCases();
+testCases();
