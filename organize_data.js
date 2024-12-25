@@ -105,38 +105,31 @@ const people = [
 
 const allPets = (people) => people.flatMap(({ pets }) => pets);
 
-// ----------------------- EMPLOYED INDIVIDUALS -----------------------\\
+// 1. How many individuals are currently employed?
 
 const employedPeople = (people) =>
   people.filter(({ occupation }) => occupation !== false).length;
 
-// ----------------------- PEOPLE OWNED CAR ---------------------------\\
+// 2. How many people own a car?
 
 const peopleWhoOwnedCar = (people) =>
   people.filter(({ vehicles }) => vehicles.includes("car")).length;
 
-// --------------------------- FULLY VACINATED ------------------------\\
+// 3. How many pets are fully vaccinated?
+
 const totalVaccinatedPets = (people) =>
   allPets(people).filter(({ isFullyVacinated }) => isFullyVacinated).length;
 
-// ------------------------ PET NAME AND TYPE -------------------------\\
+// 4. What are the names of all the pets, and what type of animal is each?
+
 const nameAndTypeOfPets = (people) =>
   allPets(people).map(({ name, type }) => ({ name, type }));
 
-// ------------------------ CITIES OF PEOPLE --------------------------\\
+// 5. Which cities do the individuals live in?
 
 const cities = (people) => people.map(({ city }) => city);
 
-// ------------------------ AVERAGE OF AGES ---------------------------\\
-
-const averageOfArray = (array) =>
-  array.reduce((accumuator, number) => accumuator + number, 0) / array.length;
-
-const averageOfAges = function (people) {
-  return averageOfArray(people.map(({ age }) => age));
-};
-
-// ----------------------- HOBBIES SHARED ---------------------------- \\
+// 6. How many hobbies are shared across the group? What are they?
 
 const hobbiesOfPeople = (people) => {
   const hobbiesOfPeople = people.flatMap(({ name, hobbies }) => ({
@@ -147,24 +140,33 @@ const hobbiesOfPeople = (people) => {
   return [hobbiesOfPeople.length, hobbiesOfPeople];
 };
 
-// ----------------------- PETS OF UNEMPLOYED -------------------------\\
+// 7. How many pets belong to people who are currently unemployed?
 
 const petsOfUnEmployed = (people) =>
   people.filter(({ occupation }) => occupation === false).length;
 
-// ----------------------- PETS OF UNEMPLOYED -------------------------\\
+// 8. What is the average age of the individuals mentioned in the passage?
+
+const averageOfArray = (array) =>
+  array.reduce((accumuator, number) => accumuator + number, 0) / array.length;
+
+const averageOfAges = function (people) {
+  return averageOfArray(people.map(({ age }) => age));
+};
+
+// 9. How many individuals have studied computer science, and how many of them have pets?
 
 const petsOfComputerSciencePeople = (people) =>
   people
     .filter(({ education }) => education === "computer science")
     .flatMap(({ pets }) => pets).length;
 
-// ------------------------- MORE THAN ONE PET ------------------------\\
+// 10. How many individuals own more than one pet?
 
 const peopleWithMoreThanOnePet = (people) =>
   people.filter((person) => person.pets.length > 1).length;
 
-// --------------------------- PET ACTIVITIES -------------------------\\
+// 11. Which pets are associated with specific favorite activities?
 
 const petNameAndActivities = (people) =>
   allPets(people).map(({ name, favouriteActivities }) => ({
@@ -172,14 +174,14 @@ const petNameAndActivities = (people) =>
     favouriteActivities,
   }));
 
-// ------------------ PET OF PEOPLE FROM BLR AND CHE ------------------\\
+// 12. What are the names of all animals that belong to people who live in Bangalore or Chennai?
 
 const petsOfPeopleFromBangloreAndChennai = (people) =>
   people
     .filter(({ city }) => city in { Banglore: true, Chennai: true })
     .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name })));
 
-// ---------------- VACINATED PETS OF CAR LESS  -----------------------\\
+// 13. How many vaccinated pets belong to people who do not own a car?
 
 const vacinatedPetsOfNoCarPeople = (people) =>
   people
@@ -187,12 +189,34 @@ const vacinatedPetsOfNoCarPeople = (people) =>
     .flatMap(({ pets }) => pets)
     .filter(({ vaccinated }) => vaccinated).length;
 
-// -------------------- PEOPLE WITH MORETHAN TWO HOBBIES --------------\\
+// 14. What is the most common type of pet among the group?
+
+const occurances = (occurances, element) => {
+  element in occurances
+    ? (occurances[element] += 1)
+    : (occurances[element] = 1);
+
+  return occurances;
+};
+
+const maxOccurances = (maxOccuredPet, pet) =>
+  maxOccuredPet[1] > pet[1] ? maxOccuredPet : pet;
+
+const commonPet = (people) => {
+  const totalOccurances = allPets(people)
+    .map(({ type }) => type)
+    .reduce(occurances, {});
+
+  return Object.entries(totalOccurances).reduce(maxOccurances)[0];
+};
+
+console.log(commonPet(people));
+// 15. How many individuals have more than two hobbies?
 
 const peopleWithMoreThanTwoHobbies = (people) =>
   people.filter(({ hobbies }) => hobbies.length > 2).length;
 
-// ----------------------------- YOUNGEST PET ---------------------------\\
+// 17. Which pet is the youngest, and what is its name?
 
 const youngestPet = function (people) {
   const youngPet = allPets(people).reduce((youngPet, pet) =>
@@ -202,12 +226,12 @@ const youngestPet = function (people) {
   return { petName: youngPet.name, petType: youngPet.type };
 };
 
-// ------------------------ CITY NAME START WITH B -------------------\\
+// 19. How many individuals live in cities starting with the letter "B"?
 
 const peopleInCityNameStartingWithB = (people) =>
   people.filter(({ city }) => city.startsWith("B")).length;
 
-// ---------------------------- DOES'NT OWN PETS -----------------------\\
+// 20. Which individuals do not own any pets?
 
 const peopleWhoDoesntOwnPet = (people) =>
   people.filter(({ pets }) => pets.length === 0);
@@ -271,4 +295,4 @@ const testCases = () => {
   testing("20. Which individuals do not own any pets?", peopleWhoDoesntOwnPet);
 };
 
-testCases();
+// testCases();
