@@ -143,7 +143,7 @@ const hobbiesOfPeople = (people) => {
 // 7. How many pets belong to people who are currently unemployed?
 
 const petsOfUnEmployed = (people) =>
-  people.filter(({ occupation }) => occupation).length;
+  people.filter(({ occupation }) => !occupation).length;
 
 // 8. What is the average age of the individuals mentioned in the passage?
 
@@ -164,7 +164,7 @@ const petsOfDegreeHolders = (people, degree) =>
 // 10. How many individuals own more than one pet?
 
 const peopleWithMoreThanOnePet = (people) =>
-  people.filter((person) => person.pets.length > 1).length;
+  people.filter(({ pets }) => pets.length > 1).length;
 
 // 11. Which pets are associated with specific favorite activities?
 
@@ -191,24 +191,24 @@ const vacinatedPetsOfPeopleWithoutVehicle = (people, vehicle) =>
 
 // 14. What is the most common type of pet among the group?
 
-// const occurances = (occurances, element) => {
-//   element in occurances
-//     ? (occurances[element] += 1)
-//     : (occurances[element] = 1);
+const occurances = (occurances, element) => {
+  element in occurances
+    ? (occurances[element] += 1)
+    : (occurances[element] = 1);
 
-//   return occurances;
-// };
+  return occurances;
+};
 
-// const maxOccurances = (maxOccuredPet, pet) =>
-//   maxOccuredPet[1] > pet[1] ? maxOccuredPet : pet;
+const maxOccurances = (maxOccuredPet, pet) =>
+  maxOccuredPet[1] > pet[1] ? maxOccuredPet : pet;
 
-// const commonPet = (people) => {
-//   const totalOccurances = allPets(people)
-//     .map(({ type }) => type)
-//     .reduce(occurances, {});
+const commonPet = (people) => {
+  const totalOccurances = allPets(people)
+    .map(({ type }) => type)
+    .reduce(occurances, {});
 
-//   return Object.entries(totalOccurances).reduce(maxOccurances)[0];
-// };
+  return Object.entries(totalOccurances).reduce(maxOccurances)[0];
+};
 
 // 15. How many individuals have more than two hobbies?
 
@@ -233,7 +233,7 @@ const peopleInCityNameStartingWithB = (people) =>
 // 20. Which individuals do not own any pets?
 
 const peopleWhoDoesntOwnPet = (people) =>
-  people.filter(({ pets }) => pets.length === 0);
+  people.filter(({ pets }) => !pets.length);
 
 // ----------------------------- TEST CASES ---------------------------\\
 const testing = function (Question, func) {
