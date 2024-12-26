@@ -4,7 +4,7 @@ const people = [
     city: "Pune",
     age: 30,
     occupation: "software engineer",
-    hobbies: [{ playing: "chess", Gardening: "watering plants" }],
+    hobbies: [{ playing: "playing chess", Gardening: "watering plants" }],
     education: "computer science",
     vehicles: ["car"],
     pets: [
@@ -108,12 +108,12 @@ const allPets = (people) => people.flatMap(({ pets }) => pets);
 // 1. How many individuals are currently employed?
 
 const employedPeople = (people) =>
-  people.filter(({ occupation }) => occupation !== false).length;
+  people.filter(({ occupation }) => occupation).length;
 
 // 2. How many people own a car?
 
-const peopleWhoOwnedCar = (people) =>
-  people.filter(({ vehicles }) => vehicles.includes("car")).length;
+const peopleWhoOwnSpecificVehicle = (people, vehicle) =>
+  people.filter(({ vehicles }) => vehicles.includes(vehicle)).length;
 
 // 3. How many pets are fully vaccinated?
 
@@ -143,7 +143,7 @@ const hobbiesOfPeople = (people) => {
 // 7. How many pets belong to people who are currently unemployed?
 
 const petsOfUnEmployed = (people) =>
-  people.filter(({ occupation }) => occupation === false).length;
+  people.filter(({ occupation }) => occupation).length;
 
 // 8. What is the average age of the individuals mentioned in the passage?
 
@@ -156,9 +156,9 @@ const averageOfAges = function (people) {
 
 // 9. How many individuals have studied computer science, and how many of them have pets?
 
-const petsOfComputerSciencePeople = (people) =>
+const petsOfDegreeHolders = (people, degree) =>
   people
-    .filter(({ education }) => education === "computer science")
+    .filter(({ education }) => education === degree)
     .flatMap(({ pets }) => pets).length;
 
 // 10. How many individuals own more than one pet?
@@ -183,32 +183,32 @@ const petsOfPeopleFromBangloreAndChennai = (people) =>
 
 // 13. How many vaccinated pets belong to people who do not own a car?
 
-const vacinatedPetsOfNoCarPeople = (people) =>
+const vacinatedPetsOfPeopleWithoutVehicle = (people, vehicle) =>
   people
-    .filter(({ vehicles }) => !vehicles.includes("car"))
+    .filter(({ vehicles }) => !vehicles.includes(vehicle))
     .flatMap(({ pets }) => pets)
     .filter(({ vaccinated }) => vaccinated).length;
 
 // 14. What is the most common type of pet among the group?
 
-const occurances = (occurances, element) => {
-  element in occurances
-    ? (occurances[element] += 1)
-    : (occurances[element] = 1);
+// const occurances = (occurances, element) => {
+//   element in occurances
+//     ? (occurances[element] += 1)
+//     : (occurances[element] = 1);
 
-  return occurances;
-};
+//   return occurances;
+// };
 
-const maxOccurances = (maxOccuredPet, pet) =>
-  maxOccuredPet[1] > pet[1] ? maxOccuredPet : pet;
+// const maxOccurances = (maxOccuredPet, pet) =>
+//   maxOccuredPet[1] > pet[1] ? maxOccuredPet : pet;
 
-const commonPet = (people) => {
-  const totalOccurances = allPets(people)
-    .map(({ type }) => type)
-    .reduce(occurances, {});
+// const commonPet = (people) => {
+//   const totalOccurances = allPets(people)
+//     .map(({ type }) => type)
+//     .reduce(occurances, {});
 
-  return Object.entries(totalOccurances).reduce(maxOccurances)[0];
-};
+//   return Object.entries(totalOccurances).reduce(maxOccurances)[0];
+// };
 
 // 15. How many individuals have more than two hobbies?
 
@@ -243,7 +243,7 @@ const testing = function (Question, func) {
 
 const testCases = () => {
   testing("1. How many individuals are currently employed?", employedPeople);
-  testing("2. How many people own a car?", peopleWhoOwnedCar);
+  testing("2. How many people own a car?", peopleWhoOwnSpecificVehicle);
   testing("3. How many pets are fully vaccinated?", totalVaccinatedPets);
   testing(
     "4. What are the names of all the pets, and what type of animal is each?",
@@ -264,7 +264,7 @@ const testCases = () => {
   );
   testing(
     "9. How many individuals have studied computer science, and how many of them have pets?",
-    petsOfComputerSciencePeople
+    petsOfDegreeHolders
   );
   testing(
     "10. How many individuals own more than one pet?",
@@ -280,7 +280,7 @@ const testCases = () => {
   );
   testing(
     "13. How many vaccinated pets belong to people who do not own a car?",
-    vacinatedPetsOfNoCarPeople
+    vacinatedPetsOfPeopleWithoutVehicle
   );
   testing(
     "15. How many individuals have more than two hobbies?",
