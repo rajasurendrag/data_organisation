@@ -174,9 +174,9 @@ const petNameAndActivities = (people) =>
     favouriteActivities,
   }));
 
-// 12. What are the names of all animals that belong to people who live in Bangalore or Chennai?
+// 12. What are the names of all animals that belong to people who live in Bangalore or Chennai or vijayawada?
 
-const petsOfPeopleFromBangloreAndChennai = (people) =>
+const petsOfPeopleFromBangloreChennai = (people) =>
   people
     .filter(({ city }) => city in { Banglore: true, Chennai: true })
     .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name })));
@@ -191,12 +191,10 @@ const vacinatedPetsOfPeopleWithoutVehicle = (people, vehicle) =>
 
 // 14. What is the most common type of pet among the group?
 
-const occurances = (occurances, element) => {
-  element in occurances
-    ? (occurances[element] += 1)
-    : (occurances[element] = 1);
+const occurances = (occurance, element) => {
+  element in occurance ? (occurance[element] += 1) : (occurance[element] = 1);
 
-  return occurances;
+  return occurance;
 };
 
 const maxOccurances = (maxOccuredPet, pet) =>
@@ -234,64 +232,3 @@ const peopleInCityNameStartingWithB = (people) =>
 
 const peopleWhoDoesntOwnPet = (people) =>
   people.filter(({ pets }) => !pets.length);
-
-// ----------------------------- TEST CASES ---------------------------\\
-const testing = function (Question, func) {
-  console.log("Qns ", Question);
-  console.log("Ans ", func(people));
-};
-
-const testCases = () => {
-  testing("1. How many individuals are currently employed?", employedPeople);
-  testing("2. How many people own a car?", peopleWhoOwnSpecificVehicle);
-  testing("3. How many pets are fully vaccinated?", totalVaccinatedPets);
-  testing(
-    "4. What are the names of all the pets, and what type of animal is each?",
-    nameAndTypeOfPets
-  );
-  testing("5. Which cities do the individuals live in?", cities);
-  testing(
-    "6. How many hobbies are shared across the group? What are they?",
-    hobbiesOfPeople
-  );
-  testing(
-    "7. How many pets belong to people who are currently unemployed?",
-    petsOfUnEmployed
-  );
-  testing(
-    "8. What is the average age of the individuals mentioned in the passage?",
-    averageOfAges
-  );
-  testing(
-    "9. How many individuals have studied computer science, and how many of them have pets?",
-    petsOfDegreeHolders
-  );
-  testing(
-    "10. How many individuals own more than one pet?",
-    peopleWithMoreThanOnePet
-  );
-  testing(
-    "11. Which pets are associated with specific favorite activities?",
-    petNameAndActivities
-  );
-  testing(
-    "12. What are the names of all animals that belong to people who live in Bangalore or Chennai?",
-    petsOfPeopleFromBangloreAndChennai
-  );
-  testing(
-    "13. How many vaccinated pets belong to people who do not own a car?",
-    vacinatedPetsOfPeopleWithoutVehicle
-  );
-  testing(
-    "15. How many individuals have more than two hobbies?",
-    peopleWithMoreThanTwoHobbies
-  );
-  testing("17. Which pet is the youngest, and what is its name?", youngestPet);
-  testing(
-    "19. How many individuals live in cities starting with the letter 'B'?",
-    peopleInCityNameStartingWithB
-  );
-  testing("20. Which individuals do not own any pets?", peopleWhoDoesntOwnPet);
-};
-
-testCases();
