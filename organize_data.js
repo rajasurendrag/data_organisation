@@ -112,12 +112,12 @@ const employedPeople = (people) =>
 
 // 2. How many people own a car?
 
-const peopleWhoOwnSpecificVehicle = (people, vehicle) =>
+const peopleWhoOwnVehicle = (people, vehicle) =>
   people.filter(({ vehicles }) => vehicles.includes(vehicle)).length;
 
 // 3. How many pets are fully vaccinated?
 
-const totalVaccinatedPets = (people) =>
+const fullyVaccinatedPets = (people) =>
   allPets(people).filter(({ isFullyVacinated }) => isFullyVacinated).length;
 
 // 4. What are the names of all the pets, and what type of animal is each?
@@ -176,9 +176,9 @@ const petNamesAndActivities = (people) =>
 
 // 12. What are the names of all animals that belong to people who live in Bangalore or Chennai or vijayawada?
 
-const petsOfPeopleFromCities = (people) =>
+const petsOfPeopleFromCities = (people, cities) =>
   people
-    .filter(({ city }) => city in { Banglore: true, Chennai: true })
+    .filter(({ city }) => cities.includes(city))
     .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name })));
 
 // 13. How many vaccinated pets belong to people who do not own a car?
