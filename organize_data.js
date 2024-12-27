@@ -147,11 +147,11 @@ const petsOfUnEmployed = (people) =>
 
 // 8. What is the average age of the individuals mentioned in the passage?
 
-const averageOfArray = (array) =>
+const averageOfGroup = (array) =>
   array.reduce((accumuator, number) => accumuator + number, 0) / array.length;
 
 const averageOfAges = function (people) {
-  return averageOfArray(people.map(({ age }) => age));
+  return averageOfGroup(people.map(({ age }) => age));
 };
 
 // 9. How many individuals have studied computer science, and how many of them have pets?
@@ -168,7 +168,7 @@ const peopleWithMoreThanOnePet = (people) =>
 
 // 11. Which pets are associated with specific favorite activities?
 
-const petNameAndActivities = (people) =>
+const petNamesAndActivities = (people) =>
   allPets(people).map(({ name, favouriteActivities }) => ({
     name,
     favouriteActivities,
@@ -176,7 +176,7 @@ const petNameAndActivities = (people) =>
 
 // 12. What are the names of all animals that belong to people who live in Bangalore or Chennai or vijayawada?
 
-const petsOfPeopleFromBangloreChennai = (people) =>
+const petsOfPeopleFromCities = (people) =>
   people
     .filter(({ city }) => city in { Banglore: true, Chennai: true })
     .flatMap(({ pets }) => pets.flatMap(({ name }) => ({ name })));
@@ -192,7 +192,8 @@ const vacinatedPetsOfPeopleWithoutVehicle = (people, vehicle) =>
 // 14. What is the most common type of pet among the group?
 
 const occurances = (occurance, element) => {
-  element in occurance ? (occurance[element] += 1) : (occurance[element] = 1);
+  occurance[element] = occurance[element] || 0;
+  occurance[element] += 1;
 
   return occurance;
 };
@@ -225,8 +226,8 @@ const youngestPet = function (people) {
 
 // 19. How many individuals live in cities starting with the letter "B"?
 
-const peopleInCityNameStartingWithB = (people) =>
-  people.filter(({ city }) => city.startsWith("B")).length;
+const peopleInCityNameStartingWithChar = (people, char) =>
+  people.filter(({ city }) => city.startsWith(char)).length;
 
 // 20. Which individuals do not own any pets?
 
